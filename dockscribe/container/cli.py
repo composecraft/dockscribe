@@ -41,7 +41,6 @@ You can view the compose file at :
         return
     print("describe whole container")
     data = analyse_whole_machine(include_volumes)
-    print(json.dumps(data, indent=2))
     resp = requests.post(f"{os.getenv('CC_URL','https://composecraft.com')}/api/compose/machine", json=data,
                          headers={"Authorization": getTokenFromData()})
     if resp.status_code != 200:
