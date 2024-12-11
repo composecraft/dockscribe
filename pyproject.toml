@@ -1,3 +1,7 @@
 [build-system]
 requires = ["setuptools"]
 build-backend = "setuptools.build_meta"
+
+[project.urls]
+"Homepage" = "https://github.com/LucasSovre/dockscribe"
+"Source" = "https://github.com/LucasSovre/dockscribe
