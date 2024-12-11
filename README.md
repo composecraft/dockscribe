@@ -11,6 +11,17 @@ This tool require an account on composecraft.com to be used, it's open source fo
 pip install dockscribe
 ```
 
+## Requirements
+
+While running the tool, you need to use a user that can call docker cmd like (without sudo):
+
+```bash
+docker run --rm hello-world
+```
+
+[this doc](https://docs.docker.com/engine/install/linux-postinstall/) might help you learn how to use docker without sudo.
+
+
 ## Usage
 
 The first thing, is to log in to your composecraft.com account ;
@@ -24,7 +35,6 @@ Then :
 ```bash
 dockscribe describe
 ```
-
 
 ![img.png](img.png)
 
