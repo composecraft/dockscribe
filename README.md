@@ -25,6 +25,9 @@ Then :
 dockscribe describe
 ```
 
+
+![img.png](img.png)
+
 This command will produce you a visual map of your current docker infrastructure.
 You can also view a compose file with :
 
