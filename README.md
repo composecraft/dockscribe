@@ -3,7 +3,7 @@
 This is a command line tool to produce a visual map of any docker infrastructure from cmd line.
 This tool require an account on composecraft.com to be used, it's open source for security reason.
 
-![demo-gif](https://cdn.discordapp.com/attachments/1304114693761400955/1316430869329870888/side-by-side-ezgif.com-video-to-gif-converter.gif?ex=675b0549&is=6759b3c9&hm=bfd85e2394801e78958c0b3de3bf94215679e7eabbe6c248ad22151a4f5c1239&)
+![gif](gif.gif)
 
 # Get started
 
