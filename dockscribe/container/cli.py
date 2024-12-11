@@ -1,6 +1,7 @@
 import json
 import sys
 from typing import Annotated
+import os
 
 import requests
 import typer

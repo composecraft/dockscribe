@@ -21,6 +21,13 @@ If you need any more help, you can use:
 \t$ dockscribe --help
 """)
 
+@app.command()
+def github():
+    """
+    Get the project official GitHub
+    """
+    print("The project github is under : https://github.com/LucasSovre/dockscribe")
+
 app.add_typer(compose_craft_app)
 app.add_typer(container_app)
 
