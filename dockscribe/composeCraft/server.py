@@ -52,7 +52,7 @@ def run_server(port: int):
     """
     try:
         server = HTTPServer(('localhost', port), ShutdownHTTPRequestHandler)
-        print(f"Wait for login on {os.getenv('CC_URL','https://composecraft.com')} ...")
+        print(f"Wait for login on {os.getenv('CC_URL','https://composecraft.com')}/login/cli ...")
         open_browser(f"{os.getenv('CC_URL','https://composecraft.com')}/login/cli")
         server.serve_forever()
     except KeyboardInterrupt:

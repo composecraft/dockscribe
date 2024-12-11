@@ -1,3 +1,4 @@
+import json
 import threading
 
 import typer
@@ -13,7 +14,10 @@ def login(token:str=None) -> None:
     Login to composecraft.com
     """
     if token :
-        print("Using token")
+        config_path = get_app_data_path() + "/config.json"
+        with open(config_path, "w+") as f:
+            f.write(json.dumps({"token": token}))
+        print(f"config file written to {config_path}")
         return
     try:
         from .server import run_server
