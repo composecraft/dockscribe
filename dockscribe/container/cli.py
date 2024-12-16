@@ -1,10 +1,10 @@
 import sys
 from typing import Annotated
-import os
 
 import requests
 import typer
 
+from ..config import config
 from .analyse import analyse_whole_machine, analyse_compose_file
 from .utils import exitIfBadToken, getTokenFromData
 
@@ -27,7 +27,7 @@ def describe(
     if filename:
         print(f"describe {filename}")
         compose_file_content_cleaned = analyse_compose_file(filename)
-        resp = requests.post(f"{os.getenv('CC_URL','https://composecraft.com')}/api/compose", json=compose_file_content_cleaned, headers={"Authorization":getTokenFromData() })
+        resp = requests.post(f"{config['url']}/api/compose", json=compose_file_content_cleaned, headers={"Authorization":getTokenFromData() })
         if resp.status_code != 200:
             sys.exit("Failed to describe compose, there is a problem with the API.")
         else :
@@ -35,12 +35,12 @@ def describe(
 Complete analysis 🥳 ! 
             
 You can view the compose file at :
-\t{os.getenv('CC_URL','https://composecraft.com')}/dashboard/playground?id={resp.json()['id']}
+\t{config['url']}/dashboard/playground?id={resp.json()['id']}
 """)
         return
     print("describe whole container")
     data = analyse_whole_machine(include_volumes)
-    resp = requests.post(f"{os.getenv('CC_URL','https://composecraft.com')}/api/compose/machine", json=data,
+    resp = requests.post(f"{config['url']}/api/compose/machine", json=data,
                          headers={"Authorization": getTokenFromData()})
     if resp.status_code != 200:
         sys.exit("Failed to describe compose, there is a problem with the API.")
@@ -49,6 +49,6 @@ You can view the compose file at :
         Complete analysis 🥳 ! 
 
         You can view the compose file at :
-        \t{os.getenv('CC_URL','https://composecraft.com')}/dashboard/playground?id={resp.json()['id']}
+        \t{config['url']}/dashboard/playground?id={resp.json()['id']}
         """)
     return

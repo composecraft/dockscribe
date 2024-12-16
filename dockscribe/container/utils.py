@@ -1,6 +1,6 @@
 import json
 import sys
-import os
+from ..config import config
 
 import requests
 
@@ -34,7 +34,7 @@ def getTokenFromData()->str:
         return data.get("token")
 
 def verifyToken()->bool:
-    resp = requests.post(f"{os.getenv('CC_URL','https://composecraft.com')}/api/auth/jwtVerify",json={
+    resp = requests.post(f"{config['url']}/api/auth/jwt",json={
         "token":getTokenFromData()
     })
     return resp.ok
@@ -43,3 +43,9 @@ def exitIfBadToken():
     if not verifyToken():
         print("The composecraft token has expired or is invalid.\n\nPlease login and try again. You can use : \n\t$ dockscribe login")
         sys.exit("Token invalid")
+
+def save_config(token:str)->None:
+    config_path = get_app_data_path() + "/config.json"
+    with open(config_path, "w+") as f:
+        f.write(json.dumps({"token": token}))
+    print(f"config file written to {config_path}")

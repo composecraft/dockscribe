@@ -1,24 +1,34 @@
-import json
+import sys
 import threading
 
 import typer
 
+from .server import login_with_email_password
 from .utils import get_app_data_path
-from ..container.utils import exitIfBadToken
+from ..container.utils import exitIfBadToken, save_config
 
 app = typer.Typer()
 
 @app.command()
-def login(token:str=None) -> None:
+def login(
+        token:str=None,
+        email:str=None,
+        password:str=None,
+) -> None:
     """
     Login to composecraft.com
     """
     if token :
-        config_path = get_app_data_path() + "/config.json"
-        with open(config_path, "w+") as f:
-            f.write(json.dumps({"token": token}))
-        print(f"config file written to {config_path}")
+        save_config(token)
         return
+    if email or password :
+        if not email or not password:
+            sys.exit("When providing an email or password, you must provide both")
+        try:
+            save_config(login_with_email_password(email, password))
+            return
+        except Exception as e:
+            sys.exit(f"Failed to login to composecraft.com: {e}")
     try:
         from .server import run_server
         server_thread = threading.Thread(target=run_server, args=(5555,), daemon=True)

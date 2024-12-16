@@ -1,12 +1,18 @@
+from typing import Annotated
+
 import typer
 from .composeCraft import app as compose_craft_app
 from .container import app as container_app
+from .config import config
 
 app = typer.Typer()
 
 
 @app.callback(invoke_without_command=True)
-def default(ctx: typer.Context):
+def default(ctx: typer.Context,
+            url:Annotated[str, typer.Option(help="The compose craft server url (usefull in case of self-hosting)")] = "https://composecraft.com"):
+    if url is not None:
+        config.update({"url": url})
     # Only print help if no subcommand is invoked
     if ctx.invoked_subcommand is None:
         print("""

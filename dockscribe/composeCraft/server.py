@@ -1,5 +1,8 @@
 import json
-import os
+
+import requests
+
+from ..config import config
 import threading
 from http.server import BaseHTTPRequestHandler, HTTPServer
 from urllib.parse import urlparse, parse_qs
@@ -52,10 +55,23 @@ def run_server(port: int):
     """
     try:
         server = HTTPServer(('localhost', port), ShutdownHTTPRequestHandler)
-        print(f"Wait for login on {os.getenv('CC_URL','https://composecraft.com')}/login/cli ...")
-        open_browser(f"{os.getenv('CC_URL','https://composecraft.com')}/login/cli")
+        print(f"Wait for login on {config['url']}/login/cli ...")
+        open_browser(f"{config['url']}/login/cli")
         server.serve_forever()
     except KeyboardInterrupt:
         print("\nCmd interrupted by user.")
     finally:
         server.server_close()
+
+def login_with_email_password(email:str, password:str)->str|None:
+    url = f"{config['url']}/api/auth/jwt"
+    params = {"email": email, "password": password}
+    response = requests.get(url, params=params)
+    response.raise_for_status()  # Raise an exception for HTTP errors (4xx/5xx)
+
+    # Parse the JSON response to extract the token
+    token = response.json().get("token")
+    if token:
+        return token
+    else:
+        raise Exception("Token not found in response.")
