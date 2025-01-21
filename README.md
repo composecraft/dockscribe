@@ -28,8 +28,17 @@ docker run --rm hello-world
 
 The first thing, is to log in to your composecraft.com account ;
 
+Note : You can also use it with your own instance by specifying `--url`
+(you will have to specify it for each CLI call)
+
+like : 
+
 ```bash
-dockscribe login
+dockscribe --url https://composecraft.com login --password mypasword --email my_compose_craft_email
+```
+
+```bash
+dockscribe login --password mypasword --email my_compose_craft_email
 ```
 
 Then :
